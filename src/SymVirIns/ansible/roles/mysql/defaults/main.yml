@@ -1,0 +1,5 @@
+---
+# MySQL Installation settings
+
+root_password: 'root'
+host_machine_ip: '10.0.0.1'

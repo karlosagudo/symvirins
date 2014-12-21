@@ -30,7 +30,11 @@ class InstallerCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         
-        $twig = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__."/templates/"));
+        $dirPhar = $this->universalDirectory("phar:///home/evelyn/workspace/symVirIns/symvirins.phar/");
+        $dir = getcwd().DIRECTORY_SEPARATOR;
+        
+        $twig = new Twig_Environment(new Twig_Loader_Filesystem(
+                $dirPhar.$this->universalDirectory("src/SymVirIns/templates/")));
         
         $default = 0;
         if ($input->getOption('defaults')) {
@@ -75,6 +79,7 @@ class InstallerCommand extends Command {
                 ."/phpmyadmin with user:root pass:root");
         
         try {
+            
             $vagrantfile = $twig->render("Vagrantfile.twig",
                     array("project" => $project, 
                           "memory" => $memory)
@@ -94,16 +99,25 @@ class InstallerCommand extends Command {
             $mysql_defaults = $twig->render("mysql-defaults-main.yml.twig",
                     array("passDb" => $passDb));
             
+            //create the ansible directory
+            // phar:///home/evelyn/workspace/symVirIns/symvirins.phar/
+             $this->copyRecursive(
+         "phar:///home/evelyn/workspace/symVirIns/symvirins.phar/src/SymVirIns/ansible",$dir."ansible");
+                      
+            
             //write files
-            file_put_contents(__DIR__."/../../Vagrantfile",$vagrantfile);
-            file_put_contents(__DIR__."/ansible/roles/hosts/defaults/main.yml",
+            file_put_contents($dir."Vagrantfile",$vagrantfile);
+            file_put_contents($dir.
+                    $this->universalDirectory("ansible/roles/hosts/defaults/main.yml"),
                     $hosts_defaults_main_yml);
-            file_put_contents(__DIR__."/ansible/roles/hosts/tasks/main.yml",
+            file_put_contents($dir.
+                    $this->universalDirectory("ansible/roles/hosts/tasks/main.yml"),
                     $hosts_tasks_main_yml);
-            file_put_contents(__DIR__.
-                    "/ansible/roles/hosts/templates/etc-apache2-sites-available-".$project.".j2",
+            file_put_contents($dir.
+                    $this->universalDirectory("ansible/roles/hosts/templates/etc-apache2-sites-available-".$project.".j2"),
                     $hosts_templates_j2);
-            file_put_contents(__DIR__."/ansible/roles/mysql/defaults/main.yml",
+            file_put_contents($dir.
+                    $this->universalDirectory("ansible/roles/mysql/defaults/main.yml"),
                     $mysql_defaults);
             
             
@@ -286,5 +300,24 @@ class InstallerCommand extends Command {
 
         return $text;
     }
-
+    
+    private function universalDirectory($str) {
+        return str_replace("/",DIRECTORY_SEPARATOR,$str);
+    }
+    
+    function copyRecursive($src,$dst) { 
+        $dir = opendir($src); 
+        @mkdir($dst); 
+        while(false !== ( $file = readdir($dir)) ) { 
+            if (( $file != '.' ) && ( $file != '..' )) { 
+                if ( is_dir($src . '/' . $file) ) { 
+                    $this->copyRecursive($src . '/' . $file,$dst . '/' . $file); 
+                } 
+                else { 
+                    copy($src . '/' . $file,$dst . '/' . $file); 
+                } 
+            } 
+        } 
+        closedir($dir); 
+    } 
 }

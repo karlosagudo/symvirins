@@ -1,0 +1,8 @@
+---
+# HOSTS Installation settings
+
+# global values
+karlos_base_path: '/var/www/karlos'
+
+# web values
+karlos_path: '/web'

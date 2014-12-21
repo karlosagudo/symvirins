@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+    ServerName  project.local
+
+    DocumentRoot "{{ karlos_base_path }} {{ karlos_path }}"
+
+    DirectoryIndex index.php
+    ErrorLog  /var/log/apache2/errors_karlos.log
+    CustomLog  /var/log/apache2/access_karlos.log combined
+    php_value error_log /var/log/apache2/php-error_karlos.log
+    
+    <Directory /var/www/karlos/web>
+        # enable the .htaccess rewrites
+        AllowOverride All
+        Order allow,deny
+        Allow from All
+    </Directory>
+</VirtualHost>
