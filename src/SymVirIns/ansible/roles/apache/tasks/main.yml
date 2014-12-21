@@ -1,0 +1,22 @@
+---
+# This playbook installs apache2 server
+
+- name: Apache | Installs Apache2 server
+  action: apt pkg={{ item }} state=installed
+  tags: apache2
+  with_items:
+    - apache2
+
+- name: Apache | Enable virtual hosts, rewrite
+  action: command a2enmod rewrite vhost_alias proxy proxy_http
+  tags: apache2
+
+- name: Apache | Disable the default site
+  action: command a2dissite 000-default
+  tags: apache2
+
+
+- name: Apache | Add vagrant user to www-data
+  shell:
+      usermod -a -G www-data vagrant
+  tags: apache2

@@ -1,0 +1,13 @@
+{
+    "chmod": "0755",
+    "directories": [
+        "src/SymVirIns"
+    ],
+    "files": [
+        "LICENSE"
+    ],
+    "git-version": "package_version",
+    "main": "bin/symvirins",
+    "output": "symvirins.phar",
+    "stub": true
+}

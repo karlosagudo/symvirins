@@ -1,0 +1,45 @@
+---
+# This playbook installs php5.3 development environment
+
+- name: PHP | Installs php 5.5 development tools
+  action: apt pkg={{ item }} state=installed
+  tags: php5
+  with_items:
+    - php5
+    - php5-xmlrpc
+    - php-soap
+    - php5-gd
+    - imagemagick
+    - php5-imagick
+    - php5-cli
+    - php-pear
+    - php5-curl
+    - php5-sqlite
+    - php5-intl
+    - php5-mcrypt
+    - php5-dev
+
+- name: PHP | Configuration file, php.ini
+  action: template src=etc-php5-apache2-php-ini.j2 dest=/etc/php5/apache2/php.ini
+  tags: common
+
+
+- name: PHP | Install composer
+  shell:
+      curl -sS https://getcomposer.org/installer | /usr/bin/php && /bin/mv -f /home/vagrant/composer.phar /usr/local/bin/composer
+      creates=/usr/local/bin/composer
+  tags: php5
+
+- name: PHP | Install PHPUnit
+  shell:
+      wget https://phar.phpunit.de/phpunit.phar | /usr/bin/php && /bin/mv -f /home/vagrant/phpunit.phar /usr/local/bin/phpunit
+      creates=/usr/local/bin/phpunit
+  tags: php5
+  
+- name: PHP | Install symfony
+  shell:
+      curl -LsS http://symfony.com/installer > symfony.phar | /usr/bin/php && /bin/mv -f /home/vagrant/symfony.phar /usr/local/bin/symfony && chmod a+x /usr/local/bin/symfony
+      creates=/usr/local/bin/symfony
+  tags: php5
+  
+  

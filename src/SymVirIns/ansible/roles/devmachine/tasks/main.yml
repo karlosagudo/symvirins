@@ -1,0 +1,24 @@
+---
+# This playbook installs common utilities for development machines
+
+- name: Common | Update dist files
+  action: apt update_cache=yes
+  tags: common
+
+- name: Common | Installs common utilities for development
+  action: apt pkg={{ item }} state=installed
+  tags: common
+  with_items:
+    - htop
+    - vim
+    - curl
+    - git
+    - sendmail
+    - default-jre
+    - unzip
+    - language-pack-en
+
+- name: Common | Message of the day
+  action: copy src=etc-update-motd-d-95-ansible dest=/etc/update-motd.d/95-ansible mode=755
+  tags: common
+ 

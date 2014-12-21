@@ -1,0 +1,17 @@
+<VirtualHost *:80>
+    ServerName  {{ localUrl }}
+
+    DocumentRoot "{{ "{{" }} {{ project }}_base_path {{ "}}" }} {{ "{{" }} {{ project }}_path {{ "}}" }}"
+
+    DirectoryIndex index.php
+    ErrorLog  /var/log/apache2/errors_{{ project }}.log
+    CustomLog  /var/log/apache2/access_{{ project }}.log combined
+    php_value error_log /var/log/apache2/php-error_{{ project }}.log
+    
+    <Directory /var/www/{{ project }}/web>
+        # enable the .htaccess rewrites
+        AllowOverride All
+        Order allow,deny
+        Allow from All
+    </Directory>
+</VirtualHost>

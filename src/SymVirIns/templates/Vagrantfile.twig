@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrant Configuration file for installing symfony on vagrant init ubuntu/trusty64 14.04 Server
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "Trusty64"
+  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  
+  config.vm.network "private_network",ip: "10.0.0.10"
+  config.vm.network "forwarded_port", guest: 80, host: 8085
+  config.vm.network "forwarded_port", guest: 3306, host: 33060
+  
+  config.vm.define "localhost" do |l|
+    l.vm.hostname = "localhost"
+  end
+
+  config.vm.provider :virtualbox do |vb|
+    vb.name = "{{ project }}"
+  end
+  
+  config.vm.synced_folder ".", "/var/www/{{ project }}", type: "nfs"
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", "{{ memory }}"]
+    vb.customize ["modifyvm", :id, "--cpus", "2"] 
+  end
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.sudo = true
+    ansible.playbook = "src/SymVirIns/ansible/playbook.yml"
+    ansible.verbose = "v"
+    ansible.host_key_checking = false
+  end
+end

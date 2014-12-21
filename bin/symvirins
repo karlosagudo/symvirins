@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+require __DIR__. '/../vendor/autoload.php';
+require __DIR__.'/../src/SymVirIns/InstallerCommand.class.php';
+
+use Symfony\Component\Console\Application;
+use SymVirIns\InstallerCommand;
+
+$application = new Application('Symvirins', '@package_version@');
+$application->add(new InstallerCommand());
+$application->run();

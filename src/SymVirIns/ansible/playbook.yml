@@ -1,0 +1,9 @@
+- hosts: localhost
+  roles:
+    - devmachine
+    - php5
+    - apache
+    - mysql
+    - memcache
+    - hosts
+    - restart

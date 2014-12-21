@@ -1,0 +1,76 @@
+---
+# This playbook installs MySQL server and MySQL client
+
+- name: MYSQL | Installs MySQL server, MYSQL client, and bindings
+  action: apt pkg={{ item }} state=installed
+  tags: mysql
+  with_items:
+    - mysql-server
+    - mysql-client
+    - php5-mysql
+    - python-mysqldb
+    - libapache2-mod-php5
+
+- name: MySQL | Configuration file, my.cnf
+  action: template src=etc-mysql-my-cnf.j2 dest=/etc/mysql/my.cnf
+  tags: mysql
+
+- name: MySQL | Set the root password.
+  action: mysql_user user=root password={{ root_password }} host=localhost
+  tags: mysql
+
+- name: MySQL | Config for easy access as root user
+  action: template src=root-my-cnf.j2 dest=/root/.my.cnf
+  tags: mysql
+
+- name: MySQL | Delete anonymous MySQL server user for localhost
+  action: mysql_user user="" host="localhost" state="absent"
+  tags: mysql
+
+- name: MySQL | Delete anonymous MySQL server user for localhost
+  action: mysql_user user="" state="absent"
+  tags: mysql
+
+- name: MySQL | Secure the MySQL root user for localhost domain (localhost)
+  action: mysql_user user="root" password="{{ root_password }}" host="localhost"
+  tags: mysql
+
+- name: MySQL | Secure the MySQL root user for {{ host_machine_ip }} domain
+  action: mysql_user user="root" password="{{ root_password }}" host="{{ host_machine_ip }}"
+  tags: mysql
+
+- name: MySQL | Update mysql root password for all root accounts
+  mysql_user: name=root host={{ item }} password={{ root_password }}
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+  tags: mysql
+
+- name: MySQL | Adds remote privileges for root (only for development)
+  mysql_user: name=root password="{{ root_password }}" priv=*.*:ALL,GRANT host="{{ host_machine_ip }}" state=present
+  tags: mysql
+
+- name: MySQL | Remove the MySQL test database
+  action: mysql_db db=test state=absent
+  tags: mysql
+  
+
+- name: Ensure PHPMyAdmin is installed.
+  action: apt pkg={{ item }} state=installed
+  tags: phpmyadmin
+  with_items:
+    - phpmyadmin
+
+
+- name: Configure phpmyadmin
+  action: template src=etc-phpmyadmin-config.j2 dest=/etc/phpmyadmin/config-bd.php
+  tags: phpmyadmin
+  
+- name: Enable phpmyadmin Apache
+  action: command cp /etc/phpmyadmin/apache.conf /etc/apache2/sites-available/phpmyadmin.conf
+  tags: phpmyadmin
+  
+- name: HOSTS | Enable phpmyadmin
+  action: command a2ensite phpmyadmin.conf
+  tags: hosts

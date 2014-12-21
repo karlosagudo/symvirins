@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo
+echo " ****************************************************************************"
+echo " * This is a development box configured using Ansible"
+echo
+echo " * This box is suitable for development on LAMP MEAN and Python environments"
+echo
+echo
+echo " * Playbook by: Carlos Agudo karlosagudo1978@gmail.com"
+echo " ***************************************************************************"
+echo
+echo
+echo
+echo

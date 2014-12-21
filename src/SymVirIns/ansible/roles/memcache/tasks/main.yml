@@ -1,0 +1,9 @@
+---
+# This playbook installs Memcache and clients
+
+- name: Memcache | Installs Memcache and clients
+  action: apt pkg={{ item }} state=installed
+  tags: common
+  with_items:
+    - memcached
+    - php5-memcache
