@@ -7,9 +7,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "Trusty64"
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
   
-  config.vm.network "private_network",ip: "10.0.0.10"
-  config.vm.network "forwarded_port", guest: 80, host: 8085
-  config.vm.network "forwarded_port", guest: 3306, host: 33060
+  config.vm.network "private_network",ip: "{{  privateIp }}"
+  config.vm.network "forwarded_port", guest: 80, host: 80{{ random(99) }}
+  config.vm.network "forwarded_port", guest: 3306, host: 330{{ random(99) }}
   
   config.vm.define "localhost" do |l|
     l.vm.hostname = "localhost"
@@ -18,12 +18,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb|
     vb.name = "{{ project }}"
   end
-  
+
+
+### VAGRANT CACHIER: http://fgrehm.viewdocs.io/vagrant-cachier #####
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.scope = :machine
+    config.cache.auto_detect = false
+    config.cache.enable :apt
+    config.cache.enable :composer
+    config.cache.synced_folder_opts = {
+        type: :nfs,
+        # The nolock option can be useful for an NFSv3 client that wants to avoid the
+        # NLM sideband protocol. Without this option, apt-get might hang if it tries
+        # to lock files needed for /var/cache/* operations. All of this can be avoided
+        # by using NFSv4 everywhere. Please note that the tcp option is not the default.
+        mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+    }
+  end
+### END VAGRANT CACHIER ###
+
   config.vm.synced_folder ".", "/var/www/{{ project }}", type: "nfs"
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "{{ memory }}"]
-    vb.customize ["modifyvm", :id, "--cpus", "2"] 
+    vb.customize ["modifyvm", :id, "--cpus", "{{ cpu }}"]
   end
 
   config.vm.provision "ansible" do |ansible|

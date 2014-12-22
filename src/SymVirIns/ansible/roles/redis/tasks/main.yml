@@ -2,14 +2,8 @@
 # This playbook installs redis server, php, python, ruby and node clients
 
 - name: Redis | Install redis server
-  action: apt pkg=redis-server state=installed
-  tags: redis
-
-- name: Redis | Install redis php library
-  shell:
-    git clone --depth 1 https://github.com/nicolasff/phpredis.git && cd phpredis && phpize && ./configure && make && make install && sh -c "echo 'extension=redis.so' > /etc/php5/conf.d/redis.ini"
-    creates=/etc/php5/conf.d/redis.ini
-  tags: redis
-
-  
-
+  action: apt pkg={{ item }} state=installed
+    tags: redis
+    with_items:
+      - redis-server
+      - php5-redis

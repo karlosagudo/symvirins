@@ -29,8 +29,11 @@ class InstallerCommand extends Command {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        
-        $dirPhar = $this->universalDirectory("phar:///home/evelyn/workspace/symVirIns/symvirins.phar/");
+
+        //phar:///home/karlos/workspace/symvirins/symvirins.phar/src/SymVirIns/InstallerCommand.class.php
+        $file = substr(__FILE__,0,-strlen("/src/SymVirIns/InstallerCommand.class.php"))."/";
+
+        $dirPhar = $this->universalDirectory($file);
         $dir = getcwd().DIRECTORY_SEPARATOR;
         
         $twig = new Twig_Environment(new Twig_Loader_Filesystem(
@@ -45,13 +48,15 @@ class InstallerCommand extends Command {
             throw new Exception("Not available for windows. Sorry");
         }
 
-        $this->setStyles($output);
+        //$this->setStyles($output);
+
         $output->writeln('<info>' . PHP_EOL . 'This command will install a virtual machine,' .
                 'using virtual box, ansible with a complete lamp and symfony installed.'
                 . '</info>'.PHP_EOL);
         $output->write("<info>Default:$default</info>".PHP_EOL);
 
         $this->checkMinimumRequisites($output);
+
         $output->write("<info>Minimum Requisited Passed. Congrats!</info>".PHP_EOL);
 
         //start interacting with user. Minimum questions
@@ -65,6 +70,11 @@ class InstallerCommand extends Command {
                 . 'the virtual box in M. Defaults: 2048', '2048');
         $memory = $helper->ask($input, $output, $questionMemory);
         if(!is_integer($memory)) $memory = 2048;
+
+        $questionCpu =  new Question('Please enter the number of cpus for '
+            . 'the virtual box : 2', '2');
+        $cpu = $helper->ask($input, $output, $questionCpu);
+        if(!is_integer($cpu)) $cpu = 2;
         
         $questionLocalUrl = new Question('Please introduce the name of the local'
                 . 'new url. Defaults project.local', 'project.local');
@@ -75,14 +85,22 @@ class InstallerCommand extends Command {
         $passDb = $helper->ask($input, $output, $questionRootDb);
         
         /** @todo: ask for phpmyadmin and pass for root phpmyadmin **/
-        $output->write("Phpmyadmin will be available at:http://".$localUrl
-                ."/phpmyadmin with user:root pass:root");
+        $output->write("Phpmyadmin will be available at:http://".$localUrl."/phpmyadmin with user:root pass:root\n");
+
+        $privateIp = "10.0.0.".rand(1,255);
+
+        $output->write("In order to better perfomance for cache apt packages and composer ones, please install vagrant cache.\n".
+            "Execute: 'vagrant plugin install vagrant-cachier'\n");
+        $output->write("Remember to update your vhosts file with this line: '$privateIp  $localUrl' \n");
+        $output->write("Execute : 'vagrant up' And your machine will start installing itself (the first time is slower) \n");
         
         try {
             
             $vagrantfile = $twig->render("Vagrantfile.twig",
-                    array("project" => $project, 
-                          "memory" => $memory)
+                    array("project"     => $project,
+                          "memory"      => $memory,
+                          "cpu"         => $cpu,
+                          "privateIp"   => $privateIp)
                     );
             /** hosts part **/
             $hosts_defaults_main_yml = $twig->render("hosts_defaults_main.yml.twig",
@@ -101,10 +119,8 @@ class InstallerCommand extends Command {
             
             //create the ansible directory
             // phar:///home/evelyn/workspace/symVirIns/symvirins.phar/
-             $this->copyRecursive(
-         "phar:///home/evelyn/workspace/symVirIns/symvirins.phar/src/SymVirIns/ansible",$dir."ansible");
-                      
-            
+            $this->copyRecursive($file."/src/SymVirIns/ansible", $dir."ansible");
+
             //write files
             file_put_contents($dir."Vagrantfile",$vagrantfile);
             file_put_contents($dir.
@@ -181,7 +197,7 @@ class InstallerCommand extends Command {
      * Checks if vagrant is available
      * returns @bool
      */
-    private function checkVagrant() {
+    private function checkVagrantVBGuest() {
         $command = "vagrant vbguest --help";
         $needle = "Usage: vagrant vbguest [vm-name] ";
         return $this->checkExit($command, $needle);
@@ -191,7 +207,7 @@ class InstallerCommand extends Command {
      * Checks if vagrant virtualbox is available
      * returns @bool
      */
-    private function checkVagrantVBGuest() {
+    private function checkVagrant() {
         $command = "vagrant --help";
         $needle = "Usage: vagrant [options] <command> [<args>]";
         return $this->checkExit($command, $needle);
@@ -235,7 +251,7 @@ class InstallerCommand extends Command {
 
     private function setStyles(OutputInterface $output) {
 
-        $styleInfo = new OutputFormatterStyle('white', 'cyan');
+        $styleInfo = new OutputFormatterStyle('white','black');
         //$styleRed = new OutputFormatterStyle('red', 'white', array('bold'));
 
         $output->getFormatter()->setStyle('info', $styleInfo);

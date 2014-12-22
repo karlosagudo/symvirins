@@ -1,5 +1,4 @@
 ---
-# This playbook installs php5.3 development environment
 
 - name: PHP | Installs php 5.5 development tools
   action: apt pkg={{ item }} state=installed
@@ -41,5 +40,10 @@
       curl -LsS http://symfony.com/installer > symfony.phar | /usr/bin/php && /bin/mv -f /home/vagrant/symfony.phar /usr/local/bin/symfony && chmod a+x /usr/local/bin/symfony
       creates=/usr/local/bin/symfony
   tags: php5
-  
+
+- name: PHP | Install Mcrypt
+  shell:
+      ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/cli/conf.d/20-mcrypt.ini |
+      ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/apache2/conf.d/20-mcrypt.ini |
+      php5enmod mcrypt
   

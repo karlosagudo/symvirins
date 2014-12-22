@@ -21,4 +21,8 @@
 - name: Common | Message of the day
   action: copy src=etc-update-motd-d-95-ansible dest=/etc/update-motd.d/95-ansible mode=755
   tags: common
+
+- name: Common | Set locale to UTF-8 us
+  shell: locale-gen en_US.UTF-8
+  tags: common
  
