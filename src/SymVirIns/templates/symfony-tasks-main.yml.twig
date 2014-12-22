@@ -1,4 +1,6 @@
 - name: Symfony | Initialize project
-  shell:
-    symfony new {{ project }}
+  command: symfony new {{ project }}
+  args:
+   chdir: /home/vagrant
+   creates: /home/vagrant/{{ project }}/composer.json
   tags: Symfony

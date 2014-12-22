@@ -37,3 +37,10 @@ Also the virtual box is configured to use vagrant-cachier that generates a machi
 In order to work install: vagrant plugin install vagrant-cachier
 
 
+###TODO
+   - Autoupdate
+   - better way to move symfony files
+   - autogenerate git.ignore
+   - Apply this: http://by-examples.net/2014/12/09/symfony2-on-vagrant.html
+   - Create github page
+   - GenerateDocker with ansible/ vagrant / virtualBox
