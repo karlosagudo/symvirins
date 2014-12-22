@@ -1,0 +1,5 @@
+- name: Symfony | Initialize project
+  remote_user: vagrant
+  shell:
+    cp -r {{ project }}/* /var/www/{{ project }}
+  tags: Symfony

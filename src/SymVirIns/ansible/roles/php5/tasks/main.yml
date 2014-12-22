@@ -22,6 +22,9 @@
   action: template src=etc-php5-apache2-php-ini.j2 dest=/etc/php5/apache2/php.ini
   tags: common
 
+- name: PHP | Configuration CLI file, php.ini
+  action: template src=etc-php5-cli-php-ini.j2 dest=/etc/php5/cli/php.ini
+  tags: common
 
 - name: PHP | Install composer
   shell:
@@ -40,6 +43,11 @@
       curl -LsS http://symfony.com/installer > symfony.phar | /usr/bin/php && /bin/mv -f /home/vagrant/symfony.phar /usr/local/bin/symfony && chmod a+x /usr/local/bin/symfony
       creates=/usr/local/bin/symfony
   tags: php5
+
+- name: PHP | Permissions
+  shell:
+      chown vagrant:vagrant /usr/local/bin/symfony /usr/local/bin/composer /usr/local/bin/phpunit
+
 
 - name: PHP | Install Mcrypt
   shell:

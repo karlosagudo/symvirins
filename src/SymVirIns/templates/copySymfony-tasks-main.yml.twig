@@ -1,0 +1,7 @@
+- name: Symfony | Copy files
+  remote_user: vagrant
+  shell:
+    rm -r {{ project }}/vendor
+    cp -r {{ project }}/* /var/www/{{ project }}
+    cd /var/www/{{ project }} && composer update
+  tags: Symfony

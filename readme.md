@@ -11,6 +11,7 @@ Do not worry right now to download and install this system. This command will gu
 
 ### INSTALL
 You may download a ready-to-use version of Box as a Phar:
+
 $ curl -LSs https://github.com/karlosagudo/symvirins/raw/master/symvirins.phar
 
 From there, you may place it anywhere that will make it easier for you to access (such as /usr/local/bin) and chmod it to 755.
@@ -32,6 +33,7 @@ And the installation of the virtual box will start. (will take longer the first 
   - Apache 2 (Configured) / php log in: /var/log/apache2/php-error_{{ project }}.log
   - Mysql(configured), phpmyadmin(configured)
   - Composer, phpunit, symfony, memcached, redis
-
+Also the virtual box is configured to use vagrant-cachier that generates a machine cache for composer and apt packages.
+In order to work install: vagrant plugin install vagrant-cachier
 
 

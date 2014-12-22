@@ -34,6 +34,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         # by using NFSv4 everywhere. Please note that the tcp option is not the default.
         mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
     }
+    config.cache.enable :generic, {
+       "wget" => { cache_dir: "/var/cache/wget" },
+    }
   end
 ### END VAGRANT CACHIER ###
 

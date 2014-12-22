@@ -1,9 +1,13 @@
 ---
-# This playbook installs redis server, php, python, ruby and node clients
+# This playbook installs redis server
 
-- name: Redis | Install redis server
-  action: apt pkg={{ item }} state=installed
-    tags: redis
-    with_items:
-      - redis-server
-      - php5-redis
+#- name: Redis | Install redis server
+#  action: apt pkg={{ item }} state=installed
+#  tags: redis
+#  with_items:
+#    - redis-server
+#    - php5-redis
+
+- name: Redis | Install redis server and php client
+  shell:
+      apt-get install redis-server php5-redis

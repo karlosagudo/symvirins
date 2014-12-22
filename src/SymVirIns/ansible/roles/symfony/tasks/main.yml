@@ -1,0 +1,5 @@
+- name: Symfony | Initialize project
+  remote_user: vagrant
+  shell:
+    symfony new {{ project }}
+  tags: Symfony

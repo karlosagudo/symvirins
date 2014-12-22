@@ -93,6 +93,8 @@ class InstallerCommand extends Command {
             "Execute: 'vagrant plugin install vagrant-cachier'\n");
         $output->write("Remember to update your vhosts file with this line: '$privateIp  $localUrl' \n");
         $output->write("Execute : 'vagrant up' And your machine will start installing itself (the first time is slower) \n");
+
+        $DateTimeZone = date_default_timezone_get();
         
         try {
             
@@ -116,6 +118,17 @@ class InstallerCommand extends Command {
             /** mysql part **/
             $mysql_defaults = $twig->render("mysql-defaults-main.yml.twig",
                     array("passDb" => $passDb));
+            /** symfony initialize **/
+            $symfony_defaults = $twig->render("symfony-tasks-main.yml.twig",
+                    array("project" => $project));
+            $symfony_copy = $twig->render("copySymfony-tasks-main.yml.twig",
+                array("project" => $project));
+
+            $phpIni = $twig->render("etc-php5-apache2-php-ini.j2.twig",
+                    array("DateTimeZone" => $DateTimeZone));
+
+            $phpIniCli = $twig->render("etc-php5-cli-php-ini.j2.twig",
+                array("DateTimeZone" => $DateTimeZone));
             
             //create the ansible directory
             // phar:///home/evelyn/workspace/symVirIns/symvirins.phar/
@@ -135,7 +148,18 @@ class InstallerCommand extends Command {
             file_put_contents($dir.
                     $this->universalDirectory("ansible/roles/mysql/defaults/main.yml"),
                     $mysql_defaults);
-            
+            file_put_contents($dir.
+                    $this->universalDirectory("ansible/roles/symfony/tasks/main.yml"),
+                    $symfony_defaults);
+            file_put_contents($dir.
+                $this->universalDirectory("ansible/roles/copySymfony/tasks/main.yml"),
+                $symfony_copy);
+            file_put_contents($dir.
+                $this->universalDirectory("ansible/roles/php5/templates/etc-php5-apache2-php-ini.j2"),
+                $phpIni);
+            file_put_contents($dir.
+                $this->universalDirectory("ansible/roles/php5/templates/etc-php5-cli-php-ini.j2"),
+                $phpIniCli);
             
             
         }catch(Exception $e) {

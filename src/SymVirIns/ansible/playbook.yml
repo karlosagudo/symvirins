@@ -2,8 +2,11 @@
   roles:
     - devmachine
     - php5
+    - symfony
     - apache
     - mysql
     - memcache
+    #- redis
     - hosts
     - restart
+    - copySymfony

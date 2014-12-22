@@ -13,6 +13,6 @@
   action: service name=memcached state=restarted
   tags: restart
 
-- name: Restart Redis
-  action: service name=redis-server state=restarted
-  tags: restart
+#- name: Restart Redis
+#  action: service name=redis-server state=restarted
+#  tags: restart
