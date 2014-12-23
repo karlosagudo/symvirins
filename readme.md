@@ -12,19 +12,28 @@ Do not worry right now to download and install this system. This command will gu
 ### INSTALL
 Download symvirins as a Phar:
 
+```sh
 $ curl -LSs https://github.com/karlosagudo/symvirins/raw/master/symvirins.phar
+```
 
 From there, you may place it anywhere that will make it easier for you to access (such as /usr/local/bin) and chmod it to 755.
 You can even rename it to just symvirins to avoid having to type the .phar extension every time.
 
+```sh
 $ symvirins --version
+```
 
 And if you want to create the virtual box goes to a directory you want and type:
+```sh
 $ symvirins install
+```
+
 This will ask you some questions or suggest to install some basics packages you will need.
 After this, you have a folder with everything ready to start your development.
 Just type :
+```sh
 $ vagrant up
+```
 And the installation of the virtual box will start. (will take longer the first time).
 
 ###EXTRAS
@@ -44,3 +53,11 @@ In order to work install: vagrant plugin install vagrant-cachier
    - Apply this: http://by-examples.net/2014/12/09/symfony2-on-vagrant.html
    - Create github page
    - GenerateDocker with ansible/ vagrant / virtualBox
+
+###THANKS
+* Based on: [DevBoxAnsible] by jandro-es
+* Using [box], and a lot of more stuff
+
+
+[box]:http://box-project.org/
+[DevBoxAnsible]:https://github.com/jandro-es/DevBoxAnsible
