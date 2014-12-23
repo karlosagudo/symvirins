@@ -1,6 +1,20 @@
-- name: Symfony | Copy files
-  remote_user: vagrant
-  command: rm -rf /home/vagrant/{{ project }}/vendor &&  cp -r /home/vagrant/{{ project }}/* /var/www/{{ project }} &&  cd /var/www/{{ project }} && composer update
+- name: Symfony | Remove vendor files
+  shell:
+    rm -rf /home/vagrant/{{ project }}/vendor
   args:
+    chdir: /home/vagrant
     removes: /home/vagrant/{{ project }}/vendor
   tags: Symfony
+
+- name: Symfony | Copy Files
+  shell:
+    cp -r /home/vagrant/{{ project }}/* /var/www/{{ project }}
+  args:
+    chdir: /home/vagrant
+    creates: /var/www/composer.json
+
+- name: Symfony | Execute Composer in /home/vagrant/{{ project }}-vendor
+  lineinfile: dest=/var/www/{{ project }}/composer.json insertafter='"bin-dir"' line='        ,"vendor-dir":"/home/vagrant/{{ project }}-vendor"'
+
+- name: Symfony | Change autoload to new vendors
+  action: template src=autoload.j2 dest=/var/www/{{ project }}/app/autoload.php

@@ -43,14 +43,13 @@ And the installation of the virtual box will start. (will take longer the first 
   - Mysql(configured), phpmyadmin(configured)
   - Composer, phpunit, symfony, memcached, redis
 Also the virtual box is configured to use vagrant-cachier that generates a machine cache for composer and apt packages.
-In order to work install: vagrant plugin install vagrant-cachier
+In order to work install: vagrant plugin install vagrant-cachier.
+Also applied this in order to speed up the perfomance: http://by-examples.net/2014/12/09/symfony2-on-vagrant.html
 
 
 ###TODO
    - Autoupdate
-   - better way to move symfony files
    - autogenerate git.ignore
-   - Apply this: http://by-examples.net/2014/12/09/symfony2-on-vagrant.html
    - Create github page
    - GenerateDocker with ansible/ vagrant / virtualBox
 

@@ -1,5 +1,5 @@
 - name: Symfony | Initialize project
-  command: symfony new {{ project }}
+  shell: symfony new {{ project }}
   args:
    chdir: /home/vagrant
    creates: /home/vagrant/{{ project }}/composer.json

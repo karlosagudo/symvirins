@@ -1,7 +1,7 @@
 <VirtualHost *:80>
     ServerName  {{ localUrl }}
 
-    DocumentRoot "{{ "{{" }} {{ project }}_base_path {{ "}}" }} {{ "{{" }} {{ project }}_path {{ "}}" }}"
+    DocumentRoot "{{ "{{" }} {{ project }}_base_path {{ "}}" }}{{ "{{" }} {{ project }}_path {{ "}}" }}"
 
     DirectoryIndex index.php
     ErrorLog  /var/log/apache2/errors_{{ project }}.log

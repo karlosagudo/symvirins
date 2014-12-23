@@ -119,10 +119,13 @@ class InstallerCommand extends Command {
             $mysql_defaults = $twig->render("mysql-defaults-main.yml.twig",
                     array("passDb" => $passDb));
             /** symfony initialize **/
+            $symfony_app = $twig->render("copySymfony-templates-autoload.j2.twig",
+                array("project" => $project));
             $symfony_defaults = $twig->render("symfony-tasks-main.yml.twig",
                     array("project" => $project));
             $symfony_copy = $twig->render("copySymfony-tasks-main.yml.twig",
                 array("project" => $project));
+
 
             $phpIni = $twig->render("etc-php5-apache2-php-ini.j2.twig",
                     array("DateTimeZone" => $DateTimeZone));
@@ -151,6 +154,9 @@ class InstallerCommand extends Command {
             file_put_contents($dir.
                     $this->universalDirectory("ansible/roles/symfony/tasks/main.yml"),
                     $symfony_defaults);
+            file_put_contents($dir.
+                $this->universalDirectory("ansible/roles/copySymfony/templates/autoload.j2"),
+                $symfony_app);
             file_put_contents($dir.
                 $this->universalDirectory("ansible/roles/copySymfony/tasks/main.yml"),
                 $symfony_copy);
