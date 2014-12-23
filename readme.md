@@ -10,7 +10,7 @@ This one phar file its a console command that ask you for the steps in order to 
 Do not worry right now to download and install this system. This command will guide you throught the process of install the packages it needs, and after all the process, you will have a vendor/symvirins folder with all the ansible playbook in differents files, ready to setup.
 
 ### INSTALL
-You may download a ready-to-use version of Box as a Phar:
+Download symvirins as a Phar:
 
 $ curl -LSs https://github.com/karlosagudo/symvirins/raw/master/symvirins.phar
 
