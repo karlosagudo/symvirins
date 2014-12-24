@@ -3,15 +3,20 @@
 
     DocumentRoot "{{ "{{" }} {{ project }}_base_path {{ "}}" }}{{ "{{" }} {{ project }}_path {{ "}}" }}"
 
-    DirectoryIndex index.php
+    DirectoryIndex app.php
     ErrorLog  /var/log/apache2/errors_{{ project }}.log
     CustomLog  /var/log/apache2/access_{{ project }}.log combined
     php_value error_log /var/log/apache2/php-error_{{ project }}.log
     
     <Directory /var/www/{{ project }}/web>
-        # enable the .htaccess rewrites
-        AllowOverride All
-        Order allow,deny
+        AllowOverride None
         Allow from All
+
+        <IfModule mod_rewrite.c>
+            Options -MultiViews
+            RewriteEngine On
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteRule ^(.*)$ app.php [QSA,L]
+        </IfModule>
     </Directory>
 </VirtualHost>

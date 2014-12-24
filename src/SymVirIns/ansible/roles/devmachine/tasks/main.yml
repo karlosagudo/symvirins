@@ -28,4 +28,8 @@
     export LANG=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
   tags: common
+
+- name: Common | Give sudo to vagrant user
+  shell: usermod -aG adm vagrant
+  tags: common
  

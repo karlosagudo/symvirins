@@ -1,5 +1,8 @@
 ---
-# This playbook configures the virtual hosts
+# This playbook configures the virtual hosts && apache user
+
+- name: HOSTS | Change apache user for vagrant
+  action: lineinfile: dest=/etc/apache2/envvar regexpt="www-data" line="vagrant"
 
 - name: HOSTS | Configuration file for Apache
   action: template src=etc-apache2-sites-available-karlos.j2 dest=/etc/apache2/sites-available/karlos.conf
