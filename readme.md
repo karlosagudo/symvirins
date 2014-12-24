@@ -51,6 +51,7 @@ Also applied this in order to speed up the perfomance: http://by-examples.net/20
    - Autoupdate
    - autogenerate git.ignore
    - Create github page
+   - Solve 127.0.0.1 in symfony2 
    - GenerateDocker with ansible/ vagrant / virtualBox
 
 ###THANKS
