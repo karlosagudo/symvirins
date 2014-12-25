@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Symvirins : Very easy to use installer with ansible / vagrant / virtual box to install Symfony with a simple single command.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Symvirins</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/karlosagudo/symvirins">View on GitHub</a>
+
+          <h1 id="project_title">Symvirins</h1>
+          <h2 id="project_tagline">Very easy to use installer with ansible / vagrant / virtual box to install Symfony with a simple single command.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/karlosagudo/symvirins/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/karlosagudo/symvirins/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="symvirins" class="anchor" href="#symvirins" aria-hidden="true"><span class="octicon octicon-link"></span></a>SYMVIRINS</h1>
+
+<p>SYMfony VIRtual INStaller.
+This one phar file its a console command that ask you for the steps in order to configure a complete virtual machine using: virtual box / vagrant / ansible.</p>
+
+<ul>
+<li>Virtual Box</li>
+<li>Vagrant</li>
+<li>Ansible</li>
+</ul>
+
+<p>Do not worry right now to download and install this system. This command will guide you throught the process of install the packages it needs, and after all the process, you will have a vendor/symvirins folder with all the ansible playbook in differents files, ready to setup.</p>
+
+<h3>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>INSTALL</h3>
+
+<p>Download symvirins as a Phar:</p>
+
+<div class="highlight highlight-sh"><pre>$ curl -LSs https://github.com/karlosagudo/symvirins/raw/master/symvirins.phar</pre></div>
+
+<p>From there, you may place it anywhere that will make it easier for you to access (such as /usr/local/bin) and chmod it to 755.
+You can even rename it to just symvirins to avoid having to type the .phar extension every time.</p>
+
+<div class="highlight highlight-sh"><pre>$ symvirins --version</pre></div>
+
+<p>And if you want to create the virtual box goes to a directory you want and type:</p>
+
+<div class="highlight highlight-sh"><pre>$ symvirins install</pre></div>
+
+<p>This will ask you some questions or suggest to install some basics packages you will need.
+After this, you have a folder with everything ready to start your development.
+Just type :</p>
+
+<div class="highlight highlight-sh"><pre>$ vagrant up</pre></div>
+
+<p>And the installation of the virtual box will start. (will take longer the first time).</p>
+
+<h3>
+<a id="extras" class="anchor" href="#extras" aria-hidden="true"><span class="octicon octicon-link"></span></a>EXTRAS</h3>
+
+<ul>
+<li>htop, vim, curl, sendmal, unzip, git, composer, default-jre, language-pack-en</li>
+<li>php5, php5-xmlrpc, php-soap, php5-gd, imagemagick, php5-imagick, php5-cli, php-pear, php5-curl, php5-sqlite, php5-intl, php5-mcrypt, php5-dev</li>
+<li>Apache 2 (Configured) / php log in: /var/log/apache2/php-error_{{ project }}.log</li>
+<li>Mysql(configured), phpmyadmin(configured)</li>
+<li>Composer, phpunit, symfony, memcached, redis
+Also the virtual box is configured to use vagrant-cachier that generates a machine cache for composer and apt packages.
+In order to work install: vagrant plugin install vagrant-cachier.
+Also applied this in order to speed up the perfomance: <a href="http://by-examples.net/2014/12/09/symfony2-on-vagrant.html">http://by-examples.net/2014/12/09/symfony2-on-vagrant.html</a>
+</li>
+</ul>
+
+<h3>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>TODO</h3>
+
+<ul>
+<li>Autoupdate</li>
+<li>autogenerate git.ignore</li>
+<li>Create github page</li>
+<li>Solve 127.0.0.1 in symfony2 </li>
+<li>GenerateDocker with ansible/ vagrant / virtualBox</li>
+</ul>
+
+<h3>
+<a id="thanks" class="anchor" href="#thanks" aria-hidden="true"><span class="octicon octicon-link"></span></a>THANKS</h3>
+
+<ul>
+<li>Based on: <a href="https://github.com/jandro-es/DevBoxAnsible">DevBoxAnsible</a> by jandro-es</li>
+<li>Using <a href="http://box-project.org/">box</a>, and a lot of more stuff</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Symvirins maintained by <a href="https://github.com/karlosagudo">karlosagudo</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
