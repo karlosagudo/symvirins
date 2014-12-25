@@ -45,18 +45,18 @@ And the installation of the virtual box will start. (will take longer the first 
 Also the virtual box is configured to use vagrant-cachier that generates a machine cache for composer and apt packages.
 In order to work install: vagrant plugin install vagrant-cachier.
 Also applied this in order to speed up the perfomance: http://by-examples.net/2014/12/09/symfony2-on-vagrant.html
+Generates a .gitignore file based on : https://github.com/github/gitignore/blob/master/Symfony.gitignore
 
 
 ###TODO
    - Autoupdate
-   - autogenerate git.ignore
-   - Create github page
-   - Solve 127.0.0.1 in symfony2 
    - GenerateDocker with ansible/ vagrant / virtualBox
+   - alias dev = php app/console --env=dev / alias prod = php app/console --env=prod / composer dump-autoload --optimize
 
 ###THANKS
 * Based on: [DevBoxAnsible] by jandro-es
 * Using [box], and a lot of more stuff
+* @javiereguiluz and all symfony2 community
 
 
 [box]:http://box-project.org/

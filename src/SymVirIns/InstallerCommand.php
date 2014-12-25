@@ -31,7 +31,7 @@ class InstallerCommand extends Command {
     protected function execute(InputInterface $input, OutputInterface $output) {
 
         //phar:///home/karlos/workspace/symvirins/symvirins.phar/src/SymVirIns/InstallerCommand.class.php
-        $file = substr(__FILE__,0,-strlen("/src/SymVirIns/InstallerCommand.class.php"))."/";
+        $file = substr(__FILE__,0,-strlen("/src/SymVirIns/InstallerCommand.php"))."/";
 
         $dirPhar = $this->universalDirectory($file);
         $dir = getcwd().DIRECTORY_SEPARATOR;
@@ -62,26 +62,26 @@ class InstallerCommand extends Command {
         //start interacting with user. Minimum questions
         $helper = $this->getHelper('question');
         
-        $questionProject = new Question('Please enter the name of your project:', 'ProjectTest');
+        $questionProject = new Question('Please enter the name of your project: ', 'ProjectTest');
         $project = $helper->ask($input, $output, $questionProject);
         $project = $this->slugify($project);
         
         $questionMemory =  new Question('Please enter the amount of memory for '
-                . 'the virtual box in M. Defaults: 2048', '2048');
+                . 'the virtual box in M. (Defaults: 2048) : ', '2048');
         $memory = $helper->ask($input, $output, $questionMemory);
         if(!is_integer($memory)) $memory = 2048;
 
         $questionCpu =  new Question('Please enter the number of cpus for '
-            . 'the virtual box : 2', '2');
+            . 'the virtual box. (Defaults: 2) : ', '2');
         $cpu = $helper->ask($input, $output, $questionCpu);
         if(!is_integer($cpu)) $cpu = 2;
         
         $questionLocalUrl = new Question('Please introduce the name of the local'
-                . 'new url. Defaults project.local', 'project.local');
+                . 'new url. (Defaults project.local) : ', 'project.local');
         $localUrl = $helper->ask($input, $output, $questionLocalUrl);
         
         $questionRootDb = new Question('Please introduce your root DB password:'
-                . '(default: root) ', 'root');
+                . '(default: root) : ', 'root');
         $passDb = $helper->ask($input, $output, $questionRootDb);
         
         /** @todo: ask for phpmyadmin and pass for root phpmyadmin **/
@@ -133,8 +133,10 @@ class InstallerCommand extends Command {
             $phpIniCli = $twig->render("etc-php5-cli-php-ini.j2.twig",
                 array("DateTimeZone" => $DateTimeZone));
             
+            $finals = $twig->render("finals-tasks-main.yml.twig",
+                array("project" => $project));
+            
             //create the ansible directory
-            // phar:///home/evelyn/workspace/symVirIns/symvirins.phar/
             $this->copyRecursive($file."/src/SymVirIns/ansible", $dir."ansible");
 
             //write files
@@ -166,6 +168,9 @@ class InstallerCommand extends Command {
             file_put_contents($dir.
                 $this->universalDirectory("ansible/roles/php5/templates/etc-php5-cli-php-ini.j2"),
                 $phpIniCli);
+            file_put_contents($dir.
+                $this->universalDirectory("ansible/roles/finals/tasks/main.yml"),
+                $finals);
             
             
         }catch(Exception $e) {

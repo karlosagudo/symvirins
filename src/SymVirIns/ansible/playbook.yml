@@ -10,3 +10,4 @@
     - hosts
     - restart
     - copySymfony
+    - finals

@@ -27,4 +27,8 @@
     creates: /home/vagrant/{{ project }}-vendor/symfony
 
 - name: Symfony | Change 127.0.0.1 to 10.0.2.2 in config.php
-  lineinfile: dest=/var/www/{{ project }}/web/config.php regexp="    '127\.0\.0\.1';" line="    '10.0.2.2';"
+  lineinfile: dest=/var/www/{{ project }}/web/config.php regexp="    '127\.0\.0\.1'," line="    '10.0.2.2',"
+  
+  name: Symfony | Change 127.0.0.1 to 10.0.2.2 in app_dev.php
+  lineinfile: dest=/var/www/{{ project }}/web/app_dev.php regexp="    '127\.0\.0\.1'," line="    '10.0.2.2',"
+  

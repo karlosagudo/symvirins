@@ -1,0 +1,5 @@
+- name: FINALS | Generate gitignore file
+  action: template src=gitignore.j2 dest=/var/www/{{ project }}/.gitignore
+  tags: finals
+
+  

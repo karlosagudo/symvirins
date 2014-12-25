@@ -8,7 +8,7 @@
         "LICENSE"
     ],
     "git-version": "package_version",
-    "main": "../bin/symvirins",
+    "main": "symvirins",
     "output": "symvirins.phar",
     "stub": true
 }
