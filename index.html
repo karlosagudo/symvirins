@@ -77,11 +77,14 @@ Just type :</p>
 <li>php5, php5-xmlrpc, php-soap, php5-gd, imagemagick, php5-imagick, php5-cli, php-pear, php5-curl, php5-sqlite, php5-intl, php5-mcrypt, php5-dev</li>
 <li>Apache 2 (Configured) / php log in: /var/log/apache2/php-error_{{ project }}.log</li>
 <li>Mysql(configured), phpmyadmin(configured)</li>
-<li>Composer, phpunit, symfony, memcached, redis
-Also the virtual box is configured to use vagrant-cachier that generates a machine cache for composer and apt packages.
-In order to work install: vagrant plugin install vagrant-cachier.
-Also applied this in order to speed up the perfomance: <a href="http://by-examples.net/2014/12/09/symfony2-on-vagrant.html">http://by-examples.net/2014/12/09/symfony2-on-vagrant.html</a>
+<li>Composer, phpunit, symfony, memcached, redis</li>
+<li>Also the virtual box is configured to use vagrant-cachier that generates a machine cache for composer and apt packages. In order to work install: vagrant plugin install vagrant-cachier.</li>
+<li>Also applied this in order to speed up the perfomance: <a href="http://by-examples.net/2014/12/09/symfony2-on-vagrant.html">http://by-examples.net/2014/12/09/symfony2-on-vagrant.html</a>
 </li>
+<li>Generates a .gitignore file based on : <a href="https://github.com/github/gitignore/blob/master/Symfony.gitignore">https://github.com/github/gitignore/blob/master/Symfony.gitignore</a>
+</li>
+<li>Create especial alias for symfony2: alias dev = php app/console --env=dev / alias prod = php app/console --env=prod</li>
+<li>Optimize the dump of the autoload: composer dump-autoload --optimize</li>
 </ul>
 
 <h3>
@@ -89,9 +92,6 @@ Also applied this in order to speed up the perfomance: <a href="http://by-exampl
 
 <ul>
 <li>Autoupdate</li>
-<li>autogenerate git.ignore</li>
-<li>Create github page</li>
-<li>Solve 127.0.0.1 in symfony2 </li>
 <li>GenerateDocker with ansible/ vagrant / virtualBox</li>
 </ul>
 
@@ -101,6 +101,8 @@ Also applied this in order to speed up the perfomance: <a href="http://by-exampl
 <ul>
 <li>Based on: <a href="https://github.com/jandro-es/DevBoxAnsible">DevBoxAnsible</a> by jandro-es</li>
 <li>Using <a href="http://box-project.org/">box</a>, and a lot of more stuff</li>
+<li>
+<a href="https://github.com/javiereguiluz" class="user-mention">@javiereguiluz</a> and all symfony2 community</li>
 </ul>
       </section>
     </div>
