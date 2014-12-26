@@ -51,7 +51,6 @@
 
 - name: PHP | Install Mcrypt
   shell:
-      ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/cli/conf.d/20-mcrypt.ini |
-      ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/apache2/conf.d/20-mcrypt.ini |
-      php5enmod mcrypt
-  
+      ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/cli/conf.d/20-mcrypt.ini &&
+      ln -s /etc/php5/mods-available/mcrypt.ini /etc/php5/apache2/conf.d/20-mcrypt.ini
+      creates=/etc/php5/apache2/conf.d/20-mcrypt.ini

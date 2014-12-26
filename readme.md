@@ -42,16 +42,15 @@ And the installation of the virtual box will start. (will take longer the first 
   - Apache 2 (Configured) / php log in: /var/log/apache2/php-error_{{ project }}.log
   - Mysql(configured), phpmyadmin(configured)
   - Composer, phpunit, symfony, memcached, redis
-Also the virtual box is configured to use vagrant-cachier that generates a machine cache for composer and apt packages.
-In order to work install: vagrant plugin install vagrant-cachier.
-Also applied this in order to speed up the perfomance: http://by-examples.net/2014/12/09/symfony2-on-vagrant.html
-Generates a .gitignore file based on : https://github.com/github/gitignore/blob/master/Symfony.gitignore
-
+  - Also the virtual box is configured to use vagrant-cachier that generates a machine cache for composer and apt packages. In order to work install: vagrant plugin install vagrant-cachier.
+  - Also applied this in order to speed up the perfomance: http://by-examples.net/2014/12/09/symfony2-on-vagrant.html
+  - Generates a .gitignore file based on : https://github.com/github/gitignore/blob/master/Symfony.gitignore
+  - Create especial alias for symfony2: alias dev = php app/console --env=dev / alias prod = php app/console --env=prod
+  - Optimize the dump of the autoload: composer dump-autoload --optimize
 
 ###TODO
    - Autoupdate
    - GenerateDocker with ansible/ vagrant / virtualBox
-   - alias dev = php app/console --env=dev / alias prod = php app/console --env=prod / composer dump-autoload --optimize
 
 ###THANKS
 * Based on: [DevBoxAnsible] by jandro-es

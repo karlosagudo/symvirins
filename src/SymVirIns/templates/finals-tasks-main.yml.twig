@@ -2,4 +2,14 @@
   action: template src=gitignore.j2 dest=/var/www/{{ project }}/.gitignore
   tags: finals
 
+- name: FINALS | Generate alias for symfony2
+  action: template src=alias_symfony.j2 dest=/home/vagrant/.bash_aliases
+
+- name: FINALS |  Optimize the dump of the composer autoloadcomposer
+  shell: cd /var/www/{{ project }} && composer dump-autoload --optimize
+
+- name: FINALS | SHOW FINAL MESSAGE
+  debug: msg="Vagrant provision finished. Remember to add this line to your /etc/hosts --> {{ privateIp }}  {{ localUrl }} "
+
+
   

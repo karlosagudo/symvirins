@@ -134,7 +134,9 @@ class InstallerCommand extends Command {
                 array("DateTimeZone" => $DateTimeZone));
             
             $finals = $twig->render("finals-tasks-main.yml.twig",
-                array("project" => $project));
+                array("project"     => $project,
+                      "localUrl"    => $localUrl,
+                      "privateIp"   => $privateIp  ));
             
             //create the ansible directory
             $this->copyRecursive($file."/src/SymVirIns/ansible", $dir."ansible");
