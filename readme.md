@@ -13,7 +13,7 @@ Do not worry right now to download and install this system. This command will gu
 Download symvirins as a Phar:
 
 ```sh
-$ curl -LSs https://github.com/karlosagudo/symvirins/raw/master/symvirins.phar
+$ curl -LSs https://github.com/karlosagudo/symvirins/raw/master/symvirins.phar > symvirins.phar
 ```
 
 From there, you may place it anywhere that will make it easier for you to access (such as /usr/local/bin) and chmod it to 755.
