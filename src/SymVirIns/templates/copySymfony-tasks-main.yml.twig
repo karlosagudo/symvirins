@@ -21,7 +21,7 @@
 
 - name: Symfony | Run composer for first time
   shell:
-    rm bin/doctrine && rm bin/doctrine.php && rm bin/security-checker && composer install
+    rm bin/doctrine && rm bin/doctrine.php && rm bin/security-checker && rm bin/doctrine-dbal && composer install
   args:
     chdir: /var/www/{{ project }}
     creates: /home/vagrant/{{ project }}-vendor/symfony

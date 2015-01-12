@@ -10,7 +10,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "private_network",ip: "{{  privateIp }}"
   config.vm.network "forwarded_port", guest: 80, host: 80{{ random(99) }}
   config.vm.network "forwarded_port", guest: 3306, host: 330{{ random(99) }}
-  
+  config.ssh.forward_agent = true
+
+  config.vm.synced_folder ".", "/var/www/{{ project }}", type: "nfs"
+  config.vm.synced_folder "vendor/", "/home/vagrant/{{ project }}-vendor", type: "nfs"
+
   config.vm.define "localhost" do |l|
     l.vm.hostname = "localhost"
   end
@@ -39,8 +43,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
   end
 ### END VAGRANT CACHIER ###
-
-  config.vm.synced_folder ".", "/var/www/{{ project }}", type: "nfs"
 
   config.vm.provider :virtualbox do |vb|
     vb.customize ["modifyvm", :id, "--memory", "{{ memory }}"]
